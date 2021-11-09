@@ -9,7 +9,13 @@ namespace MongoDB.Sample.Controllers
     [ApiController]
     public class MongoDBController : ControllerBase
     {
+        /// <summary>
+        /// Chuỗi connectionstring
+        /// </summary>
         private string _connectionString = "mongodb://localhost:27017";
+        /// <summary>
+        /// Db Name
+        /// </summary>
         private string _databaseName = "MongoDB";
         private IMongoClient _mongoClient;
         private IMongoDatabase _database;
@@ -73,8 +79,7 @@ namespace MongoDB.Sample.Controllers
         [HttpPut]
         public ItemModel PutItem(ItemModel item)
         {
-            var filter = Builders<ItemModel>.Filter.Eq("Id", item.Id);
-            _collectionItem.ReplaceOne(filter, item);
+            _collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
             return item;
         }
         /// <summary>
