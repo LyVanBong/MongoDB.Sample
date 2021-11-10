@@ -55,10 +55,10 @@ _collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
 
 Xóa 1 dòng dữ liệu
 ```C#
-_collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
+_collectionItem.DeleteOne(Builders<ItemModel>.Filter.Eq("Id", id));
 ```
 
 Xóa toàn bộ dữ liệu trong bảng
 ```C#
-_collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
+_collectionItem.DeleteOne(Builders<ItemModel>.Filter.Empty);
 ```
