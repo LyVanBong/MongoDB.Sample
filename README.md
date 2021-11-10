@@ -7,6 +7,7 @@
 Tài liệu
 - [Tài liệu 1](https://docs.mongodb.com/manual/crud/)
 - [Tài liệu 2](https://www.mongodb.com/developer/quickstart/csharp-crud-tutorial/)
+- [Tài liệu 3](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio#add-a-crud-operations-service)
 
 [Docker MongoDB](https://hub.docker.com/_/mongo/)
 
@@ -20,6 +21,7 @@ private string _connectionString = "mongodb://localhost:27017";
 /// Db Name
 /// </summary>
 private string _databaseName = "MongoDB";
+private string _collectionName = "MongoDB";
 private IMongoClient _mongoClient;
 private IMongoDatabase _database;
 private IMongoCollection<ItemModel> _collectionItem;
@@ -29,7 +31,7 @@ public MongoDBController()
     settings.ServerApi = new ServerApi(ServerApiVersion.V1);
     _mongoClient = new MongoClient(settings);
     _database = _mongoClient.GetDatabase(_databaseName);
-    _collectionItem = _database.GetCollection<ItemModel>(_databaseName);
+    _collectionItem = _database.GetCollection<ItemModel>(_collectionName);
 }
 ```
 
