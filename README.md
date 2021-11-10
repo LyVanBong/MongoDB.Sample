@@ -9,7 +9,7 @@ Tài liệu
 - [Tài liệu 2](https://www.mongodb.com/developer/quickstart/csharp-crud-tutorial/)
 - [Tài liệu 3](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio#add-a-crud-operations-service)
 
-[Docker MongoDB](https://hub.docker.com/_/mongo/)
+[Image Docker MongoDB](https://hub.docker.com/_/mongo/)
 
 Khởi tạo kết nỗi với MongoDB
 ```C#
