@@ -1,6 +1,6 @@
 # MongoDB
 
-[Tải MongoDB](https://downloads.mongodb.com/windows/mongodb-windows-x86_64-enterprise-5.0.3-signed.msi)
+[Database MongoDB](https://downloads.mongodb.com/windows/mongodb-windows-x86_64-enterprise-5.0.3-signed.msi)
 
 [Thư viện kết nối MongoDB với .Net](https://www.nuget.org/packages/MongoDB.Driver)
 
@@ -55,10 +55,10 @@ _collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
 
 Xóa 1 dòng dữ liệu
 ```C#
-_collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
+_collectionItem.DeleteOne(Builders<ItemModel>.Filter.Eq("Id", id));
 ```
 
 Xóa toàn bộ dữ liệu trong bảng
 ```C#
-_collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
+_collectionItem.DeleteMany(Builders<ItemModel>.Filter.Empty);
 ```
