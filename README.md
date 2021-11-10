@@ -60,5 +60,5 @@ _collectionItem.DeleteOne(Builders<ItemModel>.Filter.Eq("Id", id));
 
 Xóa toàn bộ dữ liệu trong bảng
 ```C#
-_collectionItem.DeleteOne(Builders<ItemModel>.Filter.Empty);
+_collectionItem.DeleteMany(Builders<ItemModel>.Filter.Empty);
 ```
