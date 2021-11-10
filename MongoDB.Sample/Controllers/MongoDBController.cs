@@ -1,107 +1,59 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using MongoDB.Sample.Models;
+using MongoDB.Sample.Services;
 
 namespace MongoDB.Sample.Controllers
 {
-    [Route("api/v2/MongoDB")]
+    [Route("api/v1/MongoDB")]
     [ApiController]
     public class MongoDBController : ControllerBase
     {
-        /// <summary>
-        /// Chuỗi connectionstring
-        /// </summary>
-        private string _connectionString = "mongodb://localhost:27017";
-        /// <summary>
-        /// Db Name
-        /// </summary>
-        private string _databaseName = "MongoDB";
-        private IMongoClient _mongoClient;
-        private IMongoDatabase _database;
-        private IMongoCollection<ItemModel> _collectionItem;
-        public MongoDBController()
+        private readonly IItemService _itemService;
+        public MongoDBController(IItemService itemService)
         {
-            var settings = MongoClientSettings.FromConnectionString(_connectionString);
-            settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-            _mongoClient = new MongoClient(settings);
-            _database = _mongoClient.GetDatabase(_databaseName);
-            _collectionItem = _database.GetCollection<ItemModel>(_databaseName);
+            _itemService = itemService;
         }
-        /// <summary>
-        /// Thêm 1 item vào database
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public ItemModel PostItem1( ItemModel item)
-        {
-            _collectionItem.InsertOne(item);
-            return item;
-        }
-        ///// <summary>
-        ///// Thêm n item vào database
-        ///// </summary>
-        ///// <param name="items"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public List<ItemModel> PostItem2(List<ItemModel> items)
-        //{
-        //    _collectionItem.InsertMany(items);
-        //    return items;
-        //}
-        ///// <summary>
-        ///// Lấy 1 item theo id của nó
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        [HttpGet("{id}")]
-        public ItemModel GetItem1(int id)
-        {
-            var data = _collectionItem.Find(Builders<ItemModel>.Filter.Eq("Id", id)).FirstOrDefault();
-            return data;
-        }
-        /// <summary>
-        /// Lấy toàn bộ dữ liệu trong database
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
-        public List<ItemModel> GetItem2()
+        public ActionResult<List<ItemModel>> Get() => _itemService.GetItems();
+        [HttpGet("{id}", Name = "GetItem")]
+        public ActionResult<ItemModel> Get(string id)
         {
-            var data = _collectionItem.Find(new BsonDocument()).ToList();
-            return data;
+            var res = _itemService.GetItem(id);
+            if (res == null)
+            {
+                return NotFound();
+            }
+            return Ok(res);
         }
-        /// <summary>
-        /// Cập nhật 1 item trong database
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        [HttpPost]
+        public ActionResult<ItemModel> Create(ItemModel item)
+        {
+            _itemService.Create(item);
+            return Ok(item);
+        }
+        //[HttpPost]
+        //public ActionResult<List<ItemModel>> Adds(List<ItemModel> items) => _itemService.Create(items);
         [HttpPut]
-        public ItemModel PutItem(ItemModel item)
+        public ActionResult Update(ItemModel item)
         {
-            _collectionItem.ReplaceOne(Builders<ItemModel>.Filter.Eq("Id", item.Id), item);
-            return item;
+            var ite = _itemService.GetItem(item.Id);
+            if (ite == null) return NotFound();
+            _itemService.UpdateItem(item);
+            return Ok(ite);
         }
-        /// <summary>
-        /// Xóa 1 item
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         [HttpDelete("{id}")]
-        public string DeleteItem1(int id)
+        public ActionResult DeleteItem(string id)
         {
-            _collectionItem.DeleteOne(Builders<ItemModel>.Filter.Eq("Id", id));
-            return "Xóa thành công";
+            var res = _itemService.GetItem(id);
+            if (res == null) return NotFound();
+            _itemService.DeleteItem(id);
+            return Ok("Xao thanh cong");
         }
-        /// <summary>
-        /// Xoa all table
-        /// </summary>
-        /// <returns></returns>
         [HttpDelete]
-        public string DeleteItem2()
+        public ActionResult DeleteAll()
         {
-            _collectionItem.DeleteOne(Builders<ItemModel>.Filter.Empty);
-            return "Xóa thành công";
+            _itemService.DeleteItems();
+            return Ok("Xoa thanh cong");
         }
     }
 }
