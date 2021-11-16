@@ -9,9 +9,27 @@ Tài liệu
 - [Tài liệu 2](https://www.mongodb.com/developer/quickstart/csharp-crud-tutorial/)
 - [Tài liệu 3](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio#add-a-crud-operations-service)
 
-[Image Docker MongoDB](https://hub.docker.com/_/mongo/)
+[Download Docker Desktop for Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 
-Khởi tạo kết nỗi với MongoDB
+[Image Docker MongoDB](https://hub.docker.com/_/mongo/)
+- Pull mongo db trên docker hub về máy host
+```
+docker pull mongo:latest
+```
+- Chạy image mongo trên docker
+```
+docker run -d -p 2717:27017 -v ~/:/data/db --name mongolocal mongo:latest
+
+run : Chạy image mongo
+-d : Chạy nên
+-p : Cổng giao tiếp + 2717 là cổng giao tiếp trên máy host + 27017 là cổng giao tiếp trên mongo
+-v : Thư mục chia sẻ giữa máy host và docker
+--name : Đặt tên gọi
+mongo:latest : Image mongo
+```
+
+
+Khởi tạo kết nỗi .Net với MongoDB
 ```C#
 /// <summary>
 /// Chuỗi connectionstring
