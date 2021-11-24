@@ -12,6 +12,9 @@ Tài liệu
 [Download Docker Desktop for Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 
 [Image Docker MongoDB](https://hub.docker.com/_/mongo/)
+
+[MongoDB Shell](https://downloads.mongodb.com/compass/mongosh-1.1.2-x64.msi)
+> Để kết nỗi từ máy host vào docker mongodb thì cần phải cài mongodb shell và thêm đường dẫn Path cho mongodb shell
 - Pull mongo db trên docker hub về máy host
 ```
 docker pull mongo:latest
@@ -26,6 +29,10 @@ run : Chạy image mongo
 -v : Thư mục chia sẻ giữa máy host và docker
 --name : Đặt tên gọi
 mongo:latest : Image mongo
+```
+- Kết nỗi MongoDB từ máy host
+```
+mongosh localhost:2717 
 ```
 
 
