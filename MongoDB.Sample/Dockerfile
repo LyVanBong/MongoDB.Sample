@@ -7,7 +7,8 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["MongoDB.Sample/MongoDB.Sample.csproj", "MongoDB.Sample/"]
+COPY [".", "MongoDB.Sample/"]
+#COPY ["MongoDB.Sample/MongoDB.Sample.csproj", "MongoDB.Sample/"]
 RUN dotnet restore "MongoDB.Sample/MongoDB.Sample.csproj"
 COPY . .
 WORKDIR "/src/MongoDB.Sample"
