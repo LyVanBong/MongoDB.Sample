@@ -7,9 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY [".", "MongoDB.Sample/"]
-#COPY ["MongoDB.Sample/MongoDB.Sample.csproj", "MongoDB.Sample/"]
-RUN dotnet restore "MongoDB.Sample/MongoDB.Sample.csproj"
+COPY ["MongoDB.Sample/MongoDB.Sample.csproj", "MongoDB.Sample/"]
+RUN export http_proxy=http://proxy.fpts.com.vn:8080 \
+	&& export https_proxy=http://proxy.fpts.com.vn:8080 \
+	&& dotnet restore "MongoDB.Sample/MongoDB.Sample.csproj"
 COPY . .
 WORKDIR "/src/MongoDB.Sample"
 RUN dotnet build "MongoDB.Sample.csproj" -c Release -o /app/build
